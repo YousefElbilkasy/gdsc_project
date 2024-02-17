@@ -12,12 +12,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String apiKey = '15e3b79666554b8687d6b28021057de3';
-  late String weatherDescription = '';
-  late double temperature = 0.0;
-  late int humidity = 0;
-  late double windSpeed = 0.0;
-  late String city = '';
-  late String weatherIcon = '';
+  String? weatherDescription;
+  double? temperature;
+  int? humidity;
+  double? windSpeed;
+  String? city;
+  String? weatherIcon;
   int navIndex = 0;
 
   @override
@@ -27,11 +27,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchWeatherData() async {
-    String apiUrl = 'https://api.weatherbit.io/v2.0/current?city=$city&key=$apiKey';
+    String apiUrl =
+        'https://api.weatherbit.io/v2.0/current?city=$city&key=$apiKey';
+    // print('city: $city');
 
     final response = await http.get(Uri.parse(apiUrl));
     Map<String, dynamic> data = json.decode(response.body);
     setState(() {
+      city = data['data'][0]['city_name'];
       weatherDescription = data['data'][0]['weather']['description'];
       temperature = data['data'][0]['temp'];
       humidity = data['data'][0]['rh'];
@@ -61,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     const Icon(Icons.location_on_outlined, color: Colors.blue),
                     Text(
-                      city,
+                      '$city',
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w400),
                     ),
@@ -130,8 +133,8 @@ class _HomePageState extends State<HomePage> {
                             width: 70,
                           ),
                         ),
-                        const Text('12 km/h',
-                            style: TextStyle(
+                        Text('$windSpeed',
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal)),
@@ -151,8 +154,8 @@ class _HomePageState extends State<HomePage> {
                             width: 70,
                           ),
                         ),
-                        const Text('60%',
-                            style: TextStyle(
+                        Text('$humidity%',
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal)),
