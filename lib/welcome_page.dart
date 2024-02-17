@@ -11,7 +11,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(0, 2, 2, 7),
+      backgroundColor:  const Color(0x00504f53),
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
